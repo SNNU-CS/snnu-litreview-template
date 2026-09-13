@@ -1,0 +1,266 @@
+% !TeX program = xelatex
+% =====================================================================
+% 陕西师范大学本科毕业论文（设计）文献综述 —— 通用模板
+%
+% 【使用方法】
+%   1. 用 XeLaTeX 编译（本机 TeX Live 或 Overleaf 均可）。
+%      若图表编号显示为 ??，再编译一次即可（交叉引用需两遍）。
+%   2. 图片置于同目录 figures/ 文件夹内。模板自带的 example.png 为示例图，
+%      替换为自己的图片即可；文件名建议使用英文，避免中文或全角字符引发路径问题。
+%   3. 文中标注 ×××× 或【】之处，均需替换为实际内容。
+%   4. 封面信息与题目直接修改对应文字，日期按实际情况填写。
+%
+% 【字体开关】本机 Windows 装了宋体/黑体/楷体，用下面这个：
+%      \overleaftrue  → fontset=fandol（Overleaf / 任意平台通用，字体略朴素）
+%      \overleafalse → fontset=windows（本机编译，输出最接近学校 Word 原版）
+%   在 Overleaf 上必须保持 \overleaftrue。
+%
+% 【格式依据】学校《本科生毕业论文（设计）文献综述》要求：
+%   一级标题  一、二、…     黑体三号 居中，段前 3 行、段后 2 行
+%   二级标题  （一）（二）   黑体小三，段前 1.5 行、段后 1.5 行
+%   三级标题  1  2  …       黑体四号，段前 1 行、段后 1 行
+%   正文      宋体小四，1.5 倍行距，首行缩进 2 字符
+%   摘要正文  宋体小四；关键词 3—5 个，用逗号隔开，最后一个后面无标点
+%   图题      位于图下方，宋体五号；表题位于表格上方，宋体五号
+%   参考文献  宋体小四，GB/T 7714，顺序编码制
+% =====================================================================
+
+\newif\ifoverleaf
+\overleaftrue
+\ifoverleaf
+  \documentclass[12pt,a4paper,fontset=fandol]{ctexart}
+\else
+  \documentclass[12pt,a4paper,fontset=windows]{ctexart}
+\fi
+
+\usepackage{amsmath,amssymb}
+\usepackage{cite}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{booktabs}      % 三线表：\toprule \midrule \bottomrule
+\usepackage{makecell}      % 单元格内换行：\makecell{第一行\\第二行}
+\usepackage{float}         % [H] 让图/表钉在原地，不浮动
+\usepackage{geometry}
+\geometry{top=3.6cm,bottom=2.5cm,left=3.0cm,right=3.0cm}
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[C]{\zihao{5} 陕西师范大学本科毕业论文（设计）文献综述}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{18pt}
+
+% ---------------- 标题层级（不要改字号，学校有明确规定） ----------------
+% 一级：黑体三号居中，段前 3 行、段后 2 行
+\newcommand{\hone}[1]{%
+  \par\vspace{2\baselineskip}%
+  {\centering\heiti\zihao{3}#1\par}%
+  \vspace{1.4\baselineskip}}
+% 二级：黑体小三，段前 1.5 行、段后 1.5 行
+\newcommand{\htwo}[1]{%
+  \par\vspace{1.5\baselineskip}%
+  {\heiti\zihao{-3}#1\par}%
+  \vspace{0.8\baselineskip}}
+% 三级：黑体四号，段前 1 行、段后 1 行
+\newcommand{\hthree}[1]{%
+  \par\vspace{1\baselineskip}%
+  {\heiti\zihao{4}#1\par}%
+  \vspace{0.4\baselineskip}}
+
+% ---------------- 插图：\figimg{文件}{宽度}{题注} ----------------
+% 图题自动排在图下方（宋体五号），符合学校要求。
+% 例：\figimg{figures/yourfig.png}{10cm}{图 2-1\quad 图题写在这里。}
+\newcommand{\figimg}[3]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=#2]{#1}\par
+    \vspace{4pt}
+    {\zihao{5}#3\par}
+  \end{figure}}
+
+% ---------------- 公式：\eqn{内容}{编号} ----------------
+% 例：\eqn{E = mc^2}{2-1}   → 显示为居中的公式，右侧编号 (2-1)
+% 正文中引用写「如式~\eqref{eq:2-1} 所示」，编号会自动对应。
+\newcommand{\eqn}[2]{%
+  \begin{equation}\label{eq:#2}
+    #1 \tag{#2}
+  \end{equation}}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+
+% 让占位符 ×（U+00D7）按中文字符处理，这样才能自动断行，
+% 否则一长串 ×××× 会被当成一个不可分割的英文单词而溢出页面。
+\xeCJKDeclareCharClass{CJK}{"00D7}
+
+\begin{document}
+
+% ============================ 封 面 ============================
+\pagestyle{empty}
+\setcounter{page}{0}   % 封面不占页码
+
+\begin{center}
+  \vspace*{2.48cm}
+  \includegraphics[width=11.56cm]{shanxishida_logo.jpg}
+\end{center}
+
+\vspace{0.25cm}
+
+\begin{center}
+  {\kaishu\zihao{1} 本科生毕业论文（设计）文献综述}
+\end{center}
+
+\vspace{1.66cm}
+
+% ---------------- 题目（三号楷体；可占一行或两行） ----------------
+% 第一行写不下时换行续写；只需一行时，删除下面「题目第二行」那一行即可。
+{\zihao{3}\noindent\hspace*{56pt}\heiti 题目\kaishu ：\hspace{0.5em}题目第一行（写不下的内容放第二行）\par}
+
+\vspace{7.6pt}
+
+{\zihao{3}\noindent\kaishu 题目第二行（若只有一行，删去本行）\par}
+
+\vspace{2.26cm}
+
+% ---------------- 作者信息（四号黑体，标签两端分散） ----------------
+\begin{center}
+  \renewcommand{\arraystretch}{1.64}
+  \setlength{\tabcolsep}{6pt}
+  {\zihao{4}\heiti
+    \begin{tabular}{p{6.2cm}>{\centering\arraybackslash}p{5.8cm}}
+      \makebox[\linewidth][s]{作 者 单 位} & 陕西师范大学 \\
+      \makebox[\linewidth][s]{作 者 姓 名} & 张三 \\
+      \makebox[\linewidth][s]{专 业 班 级} & 如“恒元2301班” \\
+      \makebox[\linewidth][s]{作 者 学 号} & 学号 \\
+      \makebox[\linewidth][s]{指 导 教 师（职 称）} & 如“XXX 教授”，无则留空 \\
+    \end{tabular}}
+\end{center}
+
+\vspace{0.38cm}
+
+% ---------------- 日期（四号黑体） ----------------
+\begin{center}
+  {\zihao{4}\heiti 年\hspace{2.6em}月}
+\end{center}
+
+\clearpage
+\pagestyle{fancy}
+\linespread{1.5}\selectfont
+
+% ============================ 摘 要 ============================
+% 说明：摘要标题黑体三号居中；正文宋体小四、1.5 倍行距、首行缩进 2 字符。
+%       300 字左右，写清楚：研究背景、本综述涵盖的范围、主要结论与意义。
+\begin{center}
+  {\heiti\zihao{3} 摘\quad 要}
+\end{center}
+\vspace{0.6\baselineskip}
+
+×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。【摘要填写处】
+
+\vspace{0.3\baselineskip}
+% 说明：关键词 3—5 个，用中文逗号隔开，最后一个后面不写标点。
+\noindent{\heiti\zihao{-4}关键词：}{\songti\zihao{-4}××××，××××，××××，××××}
+
+% ============================ 一、前言 ============================
+\hone{一、前言}
+
+% 说明：写选题背景、本领域的研究脉络、已有工作的不足，以及本综述的目的与范围。
+%      文中凡引用他人观点/数据处，用 \cite{key}，并在文末 thebibliography 里
+%      用 \bibitem{key} 一一对应（编号会自动生成，不必手写）。
+%      重要：参考文献编号按正文“首次出现”的顺序自动排，所以 \bibitem 的顺序
+%            要与正文第一次引用它们的先后一致，否则要自己调顺序。
+××××××××××××××××××××××××××××××××，××××××××××××\cite{exampleZh}。×××××××××××××××××××××××××××××××××××××××××××××××××××××××××。【正文填写处，可分 2—3 段】
+
+\htwo{（一）二级标题示例}
+
+××××××××××××××××××××××××××××××××××××××××××××××××。式~\eqref{eq:2-1} 给出了本领域常用的基本关系\cite{exampleEn}：
+
+\eqn{\hat{H}\psi = E\psi}{2-1}
+
+式中 $\hat{H}$ 为哈密顿算符，$\psi$ 为波函数，$E$ 为本征能量。××××××××××××××××××××××××。【公式与符号说明示例，不需要公式时整段删去】
+
+\hthree{1  三级标题示例}
+
+×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。【如需三级标题就用 \textbackslash hthree\{1 标题\}，不需要则删去】
+
+% ============================ 二、本领域研究现状 ============================
+\hone{二、本领域研究现状}
+
+% 说明：这是文献综述的主体。按主题/方法/时间线索分节梳理，每节先概述再展开，
+%       注意“述”与“评”结合——不仅罗列别人做了什么，还要指出其贡献与局限。
+××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。
+
+\htwo{（一）××××××××方向}
+
+××××××××××××××××××××××××××××××××××××××××××××××××××××××××××，如图 2-1 所示。××××××××××××××××××××。【此处为插图排版示例，正式撰写时替换为对图的分析】
+
+% ---------------- 插图示例 ----------------
+% 用法：\figimg{figures/文件名}{宽度}{图 X-Y\quad 图题}
+%   ① 图题写在图下方（学校要求），宋体五号，由本命令自动处理；
+%   ② 图题末尾若需注明来源，建议写作者-年份式，例如「（据 Yan 等 (2015) 重绘）」，
+%      不要写「据文献 [12]」——那个编号会被当成正文引用，打乱参考文献的编号顺序。
+%   ③ 宽度按需要调（正文可用宽度 15cm），太宽会溢出、太窄看不清。
+\figimg{figures/example.png}{10cm}{图 2-1\quad ××××××（图题写在这里，位于图下方，宋体五号）。}
+
+××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。【图后的分析段落】
+
+\htwo{（二）××××××××方向}
+
+××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。
+
+% ============================ 三、存在的问题与发展趋势 ============================
+\hone{三、存在的问题与发展趋势}
+
+×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。各方法的对比见表 3-1。【此处为三线表排版示例，正式撰写时替换为实际内容】
+
+% ---------------- 三线表示例 ----------------
+% 说明：表题写在表格上方（与图相反），宋体五号；
+%       三线表用 \toprule / \midrule / \bottomrule，不要网格线；
+%       单元格内要换行用 \makecell{第一行\\第二行}；
+%       列宽合计（含每列两侧各 3pt 的 \tabcolsep）不要超过 15cm，否则会溢出。
+\begin{center}
+  {\zihao{5} 表 3-1\quad ××××××（表题写在这里，位于表格上方，宋体五号）}
+\end{center}
+\vspace{-0.2\baselineskip}
+\begin{center}
+  {\zihao{5}
+    \renewcommand{\arraystretch}{1.25}
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{4.0cm}>{\centering\arraybackslash}p{3.0cm}>{\centering\arraybackslash}p{3.6cm}}
+      \toprule
+      方法 & 基本思想 & 适用范围 & 主要局限 \\ \midrule
+      ×××××× & ×××××××××× & ×××××× & ×××××××××× \\
+      \midrule
+      ×××××× & ×××××××××× & ×××××× & ×××××××××× \\
+      \bottomrule
+    \end{tabular}}
+\end{center}
+
+% ============================ 四、小结与展望 ============================
+\hone{四、小结与展望}
+
+% 说明：收束全文——本领域已解决什么、还遗留什么、值得往哪个方向做。
+%       最后一段可以落到你自己课题的切入点上。
+××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××。
+
+% ============================ 参考文献 ============================
+\hone{参考文献}
+
+% 说明：GB/T 7714 顺序编码制——编号由 \bibitem 的先后自动生成，
+%       所以 \bibitem 的排列顺序必须与正文首次引用的先后一致。
+%       \bibitem 后面的 {key} 自己取名（英文、好记），正文用 \cite{key} 引用；
+%       同一个 key 可以引用多次。
+%       常见格式：
+%         期刊：作者. 题名[J]. 刊名, 年, 卷(期): 起止页码.
+%         专著：作者. 书名[M]. 出版地: 出版社, 年: 起止页码.
+%         学位论文：作者. 题名[D]. 城市: 学校, 年.
+%       中文作者超过 3 人时写「前三名, 等」；英文写「前三名, et al.」
+\begingroup
+\renewcommand{\section}[2]{}%   吞掉 thebibliography 自动生成的标题，避免与上文重复
+\begin{thebibliography}{27}
+\bibitem{exampleZh} 作者名. 中文文献题名[J]. 期刊名, 年份, 卷(期): 起止页码.
+\bibitem{exampleEn} Author A B, Author C D. Title of the paper[J]. Journal Name, Year, Volume(Issue): Pages.
+\end{thebibliography}
+\endgroup
+
+\end{document}
