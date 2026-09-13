@@ -4,10 +4,9 @@
 **XeLaTeX 编译，开箱即用**。封面、摘要、章节层级、图、表、公式、参考文献的字号与间距已全部按要求设好，
 只需替换内容即可。
 
-<p align="center">
-  <img src="preview/cover.png" width="46%" alt="封面">
-  <img src="preview/body.png" width="46%" alt="正文与三线表">
-</p>
+  | 封面 | 正文与三线表 |
+  | :---: | :---: |
+  | ![封面](preview/cover.png) | ![正文与三线表](preview/body.png) |
 
 ## 特点
 
