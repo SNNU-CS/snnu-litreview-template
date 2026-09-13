@@ -4,9 +4,9 @@
 **XeLaTeX 编译，开箱即用**。封面、摘要、章节层级、图、表、公式、参考文献的字号与间距已全部按要求设好，
 只需替换内容即可。
 
-  | 封面 | 正文与三线表 |
-  | :---: | :---: |
-  | ![封面](preview/cover.png) | ![正文与三线表](preview/body.png) |
+| 封面 | 正文与三线表 |
+| :---: | :---: |
+| ![封面](cover.png) | ![正文与三线表](body.png) |
 
 ## 特点
 
@@ -22,17 +22,19 @@
 .
 ├── 文献综述_模板.tex          # 模板源文件（改这个）
 ├── 文献综述_模板.pdf          # 编译结果示例
+├── example.png                # 示例插图（替换为自己的图）
 ├── shanxishida_logo.jpg       # 封面校徽
-├── figures/
-│   └── example.png            # 示例插图（替换为自己的图）
-└── preview/                   # README 预览图，撰写时无需关心
+├── cover.png / body.png       # README 预览图，撰写时无需关心
+├── README.md
+├── LICENSE
+└── .gitignore
 ```
 
 ## 快速开始
 
 ### Overleaf
 
-1. 新建项目 → **Upload Project**，上传本仓库全部文件（含 `figures/`）
+1. 新建项目 → **Upload Project**，上传本仓库全部文件
 2. 菜单 → **Compiler** 选 **XeLaTeX**
 3. 保持文件开头的 `\overleaftrue`，点击编译
 
@@ -79,7 +81,7 @@ xelatex 文献综述_模板.tex     # 第二遍用于生成图表编号与交叉
 \hthree{1  三级标题}
 
 % 插图：\figimg{文件}{宽度}{题注}  ← 题注自动排在图下方、宋体五号
-\figimg{figures/example.png}{10cm}{图 2-1\quad 图题写在这里。}
+\figimg{example.png}{10cm}{图 2-1\quad 图题写在这里。}
 
 % 公式：\eqn{内容}{编号}  ← 居中，右侧自动生成编号
 \eqn{\hat{H}\psi = E\psi}{2-1}
@@ -94,7 +96,8 @@ xelatex 文献综述_模板.tex     # 第二遍用于生成图表编号与交叉
 交叉引用需要编译两遍，再编译一次即可。
 
 **插入的图片不显示，或报 `File not found`**
-把图片放进 `figures/`，并检查 `.tex` 中的路径与文件名是否一致。
+把图片与 `.tex` 放在同一目录，并检查 `.tex` 中的文件名与实际是否一致。
+图片较多时可自建 `figures/` 文件夹，路径相应写成 `figures/xxx.png`。
 文件名建议用英文，中文或全角字符（如 `。`）在部分环境下会引发路径问题。
 
 **表格右侧超出页面**
